@@ -66,6 +66,7 @@
  '(custom-safe-themes
    (quote
     ("919469423e232db3cc35f6a94134051dd8a5a95d5cbb2a9b3c519e371a069615" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "c27cd4c7cc83199b224a7c584d5ebc8bc0b6fee77cf3a83218019eca5f33d214" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" default)))
+ '(magit-log-arguments (quote ("--graph" "--color" "--decorate" "-n256")))
  '(menu-bar-mode nil)
  '(send-mail-function (quote mailclient-send-it))
  '(show-paren-mode t)
@@ -241,5 +242,10 @@
     (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
 
 (add-hook 'yaml-mode-hook #'ansible-doc-mode)
+
+;; DOCKERFILE MODE CONFIGURATION
+;; -------------------------------------------------------------------
+(require 'dockerfile-mode)
+(add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode))
 
 ;; init.el ends here
