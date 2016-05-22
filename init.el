@@ -14,12 +14,13 @@
 
 (defvar myPackages
   '(better-defaults
+    company
+    company-jedi
+    company-go
     elpy
     flycheck
     material-theme
-    auto-complete
     go-mode
-    go-autocomplete
     projectile
     helm
     helm-projectile
@@ -33,6 +34,7 @@
     yaml-mode
     dockerfile-mode
     multiple-cursors
+    ample-theme
     ))
 
 (mapc #'(lambda (package)
@@ -58,6 +60,14 @@
 ;; --------------------------------------
 
 (elpy-enable)
+(setq elpy-rpc-python-command "python3")
+(elpy-use-cpython "python3")
+(setq python-shell-interpreter "python3")
+(setq py-python-command "/usr/bin/python3")
+(setq elpy-rpc-backend "jedi")
+(setq elpy-interactive-python-command "ipython")
+(setq elpy-use-ipython)
+(add-to-list 'company-backends 'company-jedi)
 
 ;; use flycheck with elpy
 (when (require 'flycheck nil t)
@@ -69,11 +79,6 @@
 ;; enable autopep8 on save
 ;; (require 'py-autopep8)
 ;; (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
-
-(require 'auto-complete-config)
-
-(add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
-(ac-config-default)
 
 ;; UI CONFIGURATION
 ;; --------------------------------------------------------------
@@ -93,11 +98,11 @@
  '(tool-bar-mode nil))
 
 (setq initial-frame-alist '(
-  (font . "Source Code Pro Medium-12")
+  (font . "Source Code Pro Medium-11")
 ))
 
 (setq default-frame-alist '(
-  (font . "Source Code Pro Medium-12")
+  (font . "Source Code Pro Medium-11")
   ))
 
 (defun set-exec-path-from-shell-PATH ()
@@ -142,9 +147,6 @@
 
 (add-hook 'go-mode-hook 'my-go-mode-hook)
 (add-hook 'go-mode-hook #'smartparens-mode)
-
-(require 'go-autocomplete)
-(require 'auto-complete-config)
 
 ;; HELM CONFIGURATION
 ;; ----------------------------------------------------------
