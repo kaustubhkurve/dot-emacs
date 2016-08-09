@@ -20,6 +20,7 @@
     company-racer
     racer
     elpy
+    pyvenv
     flycheck
     flycheck-rust
     material-theme
@@ -40,7 +41,15 @@
     dockerfile-mode
     multiple-cursors
     ample-theme
+    flatland-theme
+    monokai-theme
     crux
+    restclient
+    expand-region
+    aggressive-indent
+    evil
+    evil-tutor
+    key-chord
     ))
 
 (mapc #'(lambda (package)
@@ -53,9 +62,10 @@
 ;; --------------------------------------
 
 (setq inhibit-startup-message t) ;; hide the startup message
-(load-theme 'flatland t) ;; load ample them
+(load-theme 'monokai t) ;; load ample them
 (column-number-mode 1) ;; show column/row in mode line
 ;; (global-linum-mode t) ;; enable line numbers globally
+(delete-selection-mode 1) ;; Enable deletions when typing after a mark is active
 
 ;; Company Mode
 ;; --------------------------------------
@@ -75,7 +85,7 @@
 (setq py-python-command "/usr/bin/python3")
 (setq elpy-rpc-backend "jedi")
 (setq elpy-interactive-python-command "ipython")
-(setq elpy-use-ipython)
+(setq elpy-use-ipython 1)
 (add-to-list 'company-backends 'company-jedi)
 
 ;; use flycheck with elpy
@@ -309,5 +319,20 @@
 (global-set-key (kbd "C->") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+
+;; EXPAND REGION CONFIGURATION
+(require 'expand-region)
+(global-set-key (kbd "C-=") 'er/expand-region)
+
+;; AGGRESSIVE INDENT CONFIGURATION
+;; (global-aggressive-indent-mode 1) ;; Activate it globally to see how it goes
+
+;; ;; EVIL MODE CONFIGURATION
+;; (require 'evil)
+;; (evil-mode 1)
+;; (require 'key-chord)
+;; (key-chord-define evil-insert-state-map "jj" 'evil-normal-state)
+;; (key-chord-mode 1)
+
 
 ;; init.el ends here
