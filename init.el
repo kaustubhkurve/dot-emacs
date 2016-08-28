@@ -23,7 +23,7 @@
     pyvenv
     flycheck
     flycheck-rust
-    flatui
+    flatui-theme
     go-mode
     rust-mode
     projectile
