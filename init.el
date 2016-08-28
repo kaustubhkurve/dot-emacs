@@ -23,7 +23,7 @@
     pyvenv
     flycheck
     flycheck-rust
-    material-theme
+    flatui
     go-mode
     rust-mode
     projectile
@@ -40,16 +40,10 @@
     yaml-mode
     dockerfile-mode
     multiple-cursors
-    ample-theme
-    flatland-theme
-    monokai-theme
     crux
     restclient
     expand-region
     aggressive-indent
-    evil
-    evil-tutor
-    key-chord
     ))
 
 (mapc #'(lambda (package)
@@ -62,7 +56,7 @@
 ;; --------------------------------------
 
 (setq inhibit-startup-message t) ;; hide the startup message
-(load-theme 'monokai t) ;; load ample them
+(load-theme 'flatui t)
 (column-number-mode 1) ;; show column/row in mode line
 ;; (global-linum-mode t) ;; enable line numbers globally
 (delete-selection-mode 1) ;; Enable deletions when typing after a mark is active
@@ -326,13 +320,6 @@
 
 ;; AGGRESSIVE INDENT CONFIGURATION
 ;; (global-aggressive-indent-mode 1) ;; Activate it globally to see how it goes
-
-;; ;; EVIL MODE CONFIGURATION
-;; (require 'evil)
-;; (evil-mode 1)
-;; (require 'key-chord)
-;; (key-chord-define evil-insert-state-map "jj" 'evil-normal-state)
-;; (key-chord-mode 1)
 
 
 ;; init.el ends here
