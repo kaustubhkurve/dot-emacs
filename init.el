@@ -108,7 +108,7 @@
  '(menu-bar-mode nil)
  '(package-selected-packages
    (quote
-    (zenburn-theme yaml-mode which-key switch-window subatomic-theme soothe-theme solarized-theme smartparens restclient racer noctilux-theme multiple-cursors monokai-theme material-theme magit key-chord js2-mode helm-projectile helm-gtags helm-ag gruvbox-theme gruber-darker-theme flycheck-rust flatui-theme flatland-theme expand-region evil-tutor elpy dockerfile-mode crux company-racer company-jedi company-go color-theme-sanityinc-tomorrow bubbleberry-theme birds-of-paradise-plus-theme better-defaults ample-zen-theme ample-theme alect-themes aggressive-indent ag)))
+    (yaml-mode which-key switch-window smartparens restclient racer multiple-cursors magit key-chord js2-mode helm-projectile helm-gtags helm-ag flycheck-rust flatui-theme expand-region evil-tutor elpy dockerfile-mode crux company-racer company-jedi company-go better-defaults aggressive-indent ag)))
  '(send-mail-function (quote mailclient-send-it))
  '(show-paren-mode t)
  '(tool-bar-mode nil))
@@ -329,5 +329,11 @@
 (global-unset-key [right])
 (global-unset-key [up])
 (global-unset-key [down])
+
+;; Org mode configuration
+(require 'org)
+(define-key global-map "\C-cl" 'org-store-link)
+(define-key global-map "\C-ca" 'org-agenda)
+(setq org-log-done t)
 
 ;; init.el ends here
