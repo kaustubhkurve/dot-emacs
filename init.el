@@ -23,7 +23,6 @@
     pyvenv
     flycheck
     flycheck-rust
-    flatui-theme
     go-mode
     rust-mode
     projectile
@@ -44,6 +43,8 @@
     restclient
     expand-region
     aggressive-indent
+    haskell-mode
+    intero
     ))
 
 (mapc #'(lambda (package)
@@ -56,7 +57,6 @@
 ;; --------------------------------------
 
 (setq inhibit-startup-message t) ;; hide the startup message
-(load-theme 'flatui t)
 (column-number-mode 1) ;; show column/row in mode line
 ;; (global-linum-mode t) ;; enable line numbers globally
 (delete-selection-mode 1) ;; Enable deletions when typing after a mark is active
@@ -336,5 +336,8 @@
 (define-key global-map "\C-ca" 'org-agenda)
 (setq org-log-done t)
 (setq org-agenda-files (list "~/org/personal.org" "~/org/work.org"))
+
+;; Haskell Configuration
+(add-hook 'haskell-mode-hook 'intero-mode)
 
 ;; init.el ends here
