@@ -105,7 +105,7 @@
  '(menu-bar-mode nil)
  '(package-selected-packages
    (quote
-    (yaml-mode which-key switch-window smartparens restclient racer multiple-cursors magit key-chord js2-mode helm-projectile helm-gtags helm-ag flycheck-rust flatui-theme expand-region evil-tutor elpy dockerfile-mode crux company-racer company-jedi company-go better-defaults aggressive-indent ag)))
+    (intero haskell-mode yaml-mode which-key switch-window smartparens restclient racer multiple-cursors magit key-chord js2-mode helm-projectile helm-gtags helm-ag flycheck-rust flatui-theme expand-region evil-tutor elpy dockerfile-mode crux company-racer company-jedi company-go better-defaults aggressive-indent ag)))
  '(send-mail-function (quote mailclient-send-it))
  '(show-paren-mode t)
  '(tool-bar-mode nil))
@@ -320,12 +320,6 @@
 
 ;; AGGRESSIVE INDENT CONFIGURATION
 ;; (global-aggressive-indent-mode 1) ;; Activate it globally to see how it goes
-
-;; Don't use arrow keys
-(global-unset-key [left])
-(global-unset-key [right])
-(global-unset-key [up])
-(global-unset-key [down])
 
 ;; Org mode configuration
 (require 'org)
