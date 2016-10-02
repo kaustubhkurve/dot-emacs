@@ -132,9 +132,10 @@
 ;; GO CONFIGURATION
 ;; ---------------------------------------------------------
 
-(add-to-list 'load-path "~/.emacs.d/go-mode")
+(with-eval-after-load 'company
+  (add-to-list 'company-backends 'company-go))
 
-(add-to-list 'load-path "~/.emacs.d/go-mode/go-mode.el")
+(require 'go-mode)
 (require 'go-mode-autoloads)
 
 (setenv "GOPATH" "/home/kaustubh/workspace/go-projects")
