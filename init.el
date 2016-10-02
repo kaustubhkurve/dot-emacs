@@ -291,6 +291,15 @@
 (add-hook 'js-mode-hook 'js2-minor-mode)
 (add-hook 'js2-mode-hook 'ac-js2-mode)
 
+;; RUST MODE CONFIGURATION
+(setq racer-rust-src-path "/home/kaustubh/rust/src/")
+(add-hook 'rust-mode-hook #'racer-mode)
+(add-hook 'racer-mode-hook #'eldoc-mode)
+
+(require 'company-racer)
+(with-eval-after-load 'company
+  (add-to-list 'company-backends 'company-racer))
+
 ;; YAML MODE CONFIGURATION
 ;; -------------------------------------------------------------------
 
