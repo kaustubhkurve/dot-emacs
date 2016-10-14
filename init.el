@@ -60,6 +60,8 @@
 (column-number-mode 1) ;; show column/row in mode line
 ;; (global-linum-mode t) ;; enable line numbers globally
 (delete-selection-mode 1) ;; Enable deletions when typing after a mark is active
+(setq custom-file "~/.emacs.d/local/custom-set.el")
+(load custom-file 'noerror)
 
 ;; Company Mode
 ;; --------------------------------------
