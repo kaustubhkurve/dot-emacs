@@ -45,6 +45,7 @@
     aggressive-indent
     haskell-mode
     intero
+    zenburn-theme
     ))
 
 (mapc #'(lambda (package)
@@ -56,6 +57,7 @@
 ;; BASIC CUSTOMIZATION
 ;; --------------------------------------
 
+(load-theme 'zenburn t)
 (setq inhibit-startup-message t) ;; hide the startup message
 (column-number-mode 1) ;; show column/row in mode line
 ;; (global-linum-mode t) ;; enable line numbers globally
@@ -138,7 +140,7 @@
   (add-to-list 'company-backends 'company-go))
 
 (require 'go-mode)
-(require 'go-mode-autoloads)
+;; (require 'go-mode-autoloads)
 
 (setenv "GOPATH" "/home/kaustubh/workspace/go-projects")
 
@@ -295,13 +297,14 @@
 (add-hook 'js2-mode-hook 'ac-js2-mode)
 
 ;; RUST MODE CONFIGURATION
-(setq racer-rust-src-path "/home/kaustubh/rust/src/")
 (add-hook 'rust-mode-hook #'racer-mode)
 (add-hook 'racer-mode-hook #'eldoc-mode)
 
-(require 'company-racer)
-(with-eval-after-load 'company
-  (add-to-list 'company-backends 'company-racer))
+(add-hook 'racer-mode-hook #'company-mode)
+
+(require 'rust-mode)
+(define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
+(setq company-tooltip-align-annotations t)
 
 ;; YAML MODE CONFIGURATION
 ;; -------------------------------------------------------------------
@@ -342,5 +345,8 @@
 
 ;; Haskell Configuration
 (add-hook 'haskell-mode-hook 'intero-mode)
+
+;; TOML Configuration
+(require 'toml-mode)
 
 ;; init.el ends here
