@@ -45,7 +45,8 @@
     aggressive-indent
     haskell-mode
     intero
-    zenburn-theme
+    toml-mode
+    tao-theme
     ))
 
 (mapc #'(lambda (package)
@@ -57,7 +58,7 @@
 ;; BASIC CUSTOMIZATION
 ;; --------------------------------------
 
-(load-theme 'zenburn t)
+(load-theme 'tao-yin t)
 (setq inhibit-startup-message t) ;; hide the startup message
 (column-number-mode 1) ;; show column/row in mode line
 ;; (global-linum-mode t) ;; enable line numbers globally
