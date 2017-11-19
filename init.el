@@ -46,7 +46,8 @@
     haskell-mode
     intero
     toml-mode
-    tao-theme
+    anti-zenburn-theme
+    anzu
     ))
 
 (mapc #'(lambda (package)
@@ -58,7 +59,7 @@
 ;; BASIC CUSTOMIZATION
 ;; --------------------------------------
 
-(load-theme 'tao-yin t)
+(load-theme 'anti-zenburn t)
 (setq inhibit-startup-message t) ;; hide the startup message
 (column-number-mode 1) ;; show column/row in mode line
 ;; (global-linum-mode t) ;; enable line numbers globally
@@ -349,5 +350,8 @@
 
 ;; TOML Configuration
 (require 'toml-mode)
+
+;; Anzu configuration
+(global-anzu-mode +1)
 
 ;; init.el ends here
