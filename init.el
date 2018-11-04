@@ -343,7 +343,8 @@
 ;; PROJECTILE CONFIG
 ;; ------------------------------------------------------------------
 
-(projectile-global-mode)
+(projectile-mode 1)
+(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 (setq projectile-completion-system 'helm)
 (helm-projectile-on)
 (setq projectile-switch-project-action 'helm-projectile)
