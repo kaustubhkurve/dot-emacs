@@ -55,6 +55,7 @@
     dumb-jump
     tide
     editorconfig
+    web-mode
     ))
 
 (mapc #'(lambda (package)
