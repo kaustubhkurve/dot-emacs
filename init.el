@@ -14,6 +14,7 @@
 
 (defvar myPackages
   '(better-defaults
+    use-package
     company
     company-jedi
     company-go
@@ -47,7 +48,7 @@
     haskell-mode
     intero
     toml-mode
-    anti-zenburn-theme
+    solarized-theme
     scala-mode
     anzu
     php-mode
@@ -56,6 +57,16 @@
     tide
     editorconfig
     web-mode
+    terraform-mode
+    markdown-mode
+    protobuf-mode
+    lsp-mode
+    lsp-ui
+    company-lsp
+    robe
+    rubocop
+    plantuml-mode
+    cider
     ))
 
 (mapc #'(lambda (package)
@@ -66,12 +77,25 @@
 ;; BASIC CUSTOMIZATION
 ;; --------------------------------------
 
-(load-theme 'anti-zenburn t)
+;; Key bindings for mac
+(when (eq system-type 'darwin)
+  (setq mac-function-modifier 'control)
+  (setq mac-command-modifier 'meta)
+  (global-set-key (kbd "<home>") 'left-word)
+  (global-set-key (kbd "<end>") 'right-word)
+  )
+
+(setq solarized-scale-org-headlines nil)
+(load-theme 'solarized-light t)
+(set-cursor-color "brown")
+
 (setq inhibit-startup-message t) ;; hide the startup message
 (column-number-mode 1) ;; show column/row in mode line
 (delete-selection-mode 1) ;; Enable deletions when typing after a mark is active
 (setq custom-file "~/.emacs.d/local/custom-set.el")
 (load custom-file 'noerror)
+
+(show-paren-mode 1)
 
 ;; Save all backup files in /tmp
 (setq backup-directory-alist
@@ -90,7 +114,7 @@
 
 (elpy-enable)
 (setq elpy-rpc-python-command "python3")
-(elpy-use-cpython "python3")
+;; (elpy-use-cpython "python3")
 (setq python-shell-interpreter "python3")
 (setq py-python-command "/usr/bin/python3")
 (setq elpy-rpc-backend "jedi")
@@ -109,94 +133,8 @@
 ;; UI CONFIGURATION
 ;; --------------------------------------------------------------
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(ansi-color-faces-vector
-   [default default default italic underline success warning error])
- '(ansi-color-names-vector
-   ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
- '(ansi-term-color-vector
-   [unspecified "#424242" "#EF9A9A" "#C5E1A5" "#FFEE58" "#64B5F6" "#E1BEE7" "#80DEEA" "#E0E0E0"])
- '(background-color "#202020")
- '(background-mode dark)
- '(beacon-color "#ec4780")
- '(cursor-color "#cccccc")
- '(custom-safe-themes
-   (quote
-    ("086970da368bb95e42fd4ddac3149e84ce5f165e90dfc6ce6baceae30cf581ef" "0e0c37ee89f0213ce31205e9ae8bce1f93c9bcd81b1bcda0233061bb02c357a8" "15348febfa2266c4def59a08ef2846f6032c0797f001d7b9148f30ace0d08bcf" "4980e5ddaae985e4bae004280bd343721271ebb28f22b3e3b2427443e748cd3f" "9122dfb203945f6e84b0de66d11a97de6c9edf28b3b5db772472e4beccc6b3c5" "a2e7b508533d46b701ad3b055e7c708323fb110b6676a8be458a758dd8f24e27" "67e998c3c23fe24ed0fb92b9de75011b92f35d3e89344157ae0d544d50a63a72" "5cd0afd0ca01648e1fff95a7a7f8abec925bd654915153fb39ee8e72a8b56a1f" "628278136f88aa1a151bb2d6c8a86bf2b7631fbea5f0f76cba2a0079cd910f7d" "bb08c73af94ee74453c90422485b29e5643b73b05e8de029a6909af6a3fb3f58" "1b8d67b43ff1723960eb5e0cba512a2c7a2ad544ddb2533a90101fd1852b426e" "82d2cac368ccdec2fcc7573f24c3f79654b78bf133096f9b40c20d97ec1d8016" "ff7625ad8aa2615eae96d6b4469fcc7d3d20b2e1ebc63b761a349bebbb9d23cb" "9be1d34d961a40d94ef94d0d08a364c3d27201f3c98c9d38e36f10588469ea57" "87d46d0ad89557c616d04bef34afd191234992c4eb955ff3c60c6aa3afc2e5cc" "6271fc9740379f8e2722f1510d481c1df1fcc43e48fa6641a5c19e954c21cc8f" "12670281275ea7c1b42d0a548a584e23b9c4e1d2dabb747fd5e2d692bcd0d39b" "ef04dd1e33f7cbd5aa3187981b18652b8d5ac9e680997b45dc5d00443e6a46e3" "16dd114a84d0aeccc5ad6fd64752a11ea2e841e3853234f19dc02a7b91f5d661" "dd4628d6c2d1f84ad7908c859797b24cc6239dfe7d71b3363ccdd2b88963f336" "aea30125ef2e48831f46695418677b9d676c3babf43959c8e978c0ad672a7329" "db2ecce0600e3a5453532a89fc19b139664b4a3e7cbefce3aaf42b6d9b1d6214" "3eb8dec7c15ce9eb3584ec9846175d963f838eaeccf2490f8ab3daff59862212" "8062d7fd259d3232d69b38db3b15d4ac44a70bf620cbc5b3926a6e16c74d6a5a" "23ccf46b0d05ae80ee0661b91a083427a6c61e7a260227d37e36833d862ccffc" "63dd8ce36f352b92dbf4f80e912ac68216c1d7cf6ae98195e287fd7c7f7cb189" "c3e6b52caa77cb09c049d3c973798bc64b5c43cc437d449eacf35b3e776bf85c" "70f5a47eb08fe7a4ccb88e2550d377ce085fedce81cf30c56e3077f95a2909f2" "5a0eee1070a4fc64268f008a4c7abfda32d912118e080e18c3c865ef864d1bea" "4e753673a37c71b07e3026be75dc6af3efbac5ce335f3707b7d6a110ecb636a3" default)))
- '(elpy-syntax-check-command "pylint")
- '(evil-emacs-state-cursor (quote ("#E57373" hbar)))
- '(evil-insert-state-cursor (quote ("#E57373" bar)))
- '(evil-normal-state-cursor (quote ("#FFEE58" box)))
- '(evil-visual-state-cursor (quote ("#C5E1A5" box)))
- '(fci-rule-color "#383838")
- '(flycheck-color-mode-line-face-to-color (quote mode-line-buffer-id))
- '(foreground-color "#cccccc")
- '(highlight-indent-guides-auto-enabled nil)
- '(highlight-symbol-colors
-   (quote
-    ("#FFEE58" "#C5E1A5" "#80DEEA" "#64B5F6" "#E1BEE7" "#FFCC80")))
- '(highlight-symbol-foreground-color "#E0E0E0")
- '(highlight-tail-colors (quote (("#ec4780" . 0) ("#424242" . 100))))
- '(hl-paren-background-colors
-   (quote
-    ("#00FF99" "#CCFF99" "#FFCC99" "#FF9999" "#FF99CC" "#CC99FF" "#9999FF" "#99CCFF" "#99FFCC" "#7FFF00")))
- '(hl-paren-colors
-   (quote
-    ("#B9F" "#B8D" "#B7B" "#B69" "#B57" "#B45" "#B33" "#B11")))
- '(magit-log-arguments (quote ("--graph" "--color" "--decorate" "-n256")))
- '(menu-bar-mode nil)
- '(nrepl-message-colors
-   (quote
-    ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
- '(org-export-backends (quote (ascii html icalendar latex md)))
- '(package-selected-packages
-   (quote
-    (web-mode virtualenvwrapper noctilux-theme anti-zenburn-theme solarized-theme visual-regexp symbol-overlay tao-theme hungry-delete git-timemachine git-messenger json-mode markdown-mode intero haskell-mode yaml-mode which-key switch-window smartparens restclient racer multiple-cursors magit key-chord js2-mode helm-projectile helm-gtags helm-ag flycheck-rust flatui-theme expand-region evil-tutor elpy dockerfile-mode crux company-racer company-jedi company-go better-defaults aggressive-indent ag)))
- '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
- '(pos-tip-background-color "#3a3a3a")
- '(pos-tip-foreground-color "#9E9E9E")
- '(send-mail-function (quote mailclient-send-it))
- '(show-paren-mode t)
- '(sml/active-background-color "#34495e")
- '(sml/active-foreground-color "#ecf0f1")
- '(sml/inactive-background-color "#dfe4ea")
- '(sml/inactive-foreground-color "#34495e")
- '(tabbar-background-color "#353535")
- '(tool-bar-mode nil)
- '(vc-annotate-background "#2B2B2B")
- '(vc-annotate-color-map
-   (quote
-    ((20 . "#BC8383")
-     (40 . "#CC9393")
-     (60 . "#DFAF8F")
-     (80 . "#D0BF8F")
-     (100 . "#E0CF9F")
-     (120 . "#F0DFAF")
-     (140 . "#5F7F5F")
-     (160 . "#7F9F7F")
-     (180 . "#8FB28F")
-     (200 . "#9FC59F")
-     (220 . "#AFD8AF")
-     (240 . "#BFEBBF")
-     (260 . "#93E0E3")
-     (280 . "#6CA0A3")
-     (300 . "#7CB8BB")
-     (320 . "#8CD0D3")
-     (340 . "#94BFF3")
-     (360 . "#DC8CC3"))))
- '(vc-annotate-very-old-color "#DC8CC3"))
-
-(setq initial-frame-alist '(
-  (font . "Source Code Pro Medium-11")
-))
-
-(setq default-frame-alist '(
-  (font . "Source Code Pro Medium-11")
-  ))
+(setq initial-frame-alist '((font . "Source Code Pro-14")))
+(setq default-frame-alist '((font . "Source Code Pro-14")))
 
 (defun set-exec-path-from-shell-PATH ()
   (let ((path-from-shell (replace-regexp-in-string
@@ -212,35 +150,43 @@
 ;; GO CONFIGURATION
 ;; ---------------------------------------------------------
 
-(with-eval-after-load 'company
-  (add-to-list 'company-backends 'company-go))
+;; CONF BASED ON GOLANG SERVER BEGINS HERE
+(use-package lsp-mode
+  :ensure t
+  :commands (lsp lsp-deferred)
+  :hook (go-mode . lsp-deferred))
 
-(require 'go-mode)
-(require 'go-mode-autoloads)
+;; Set up before-save hooks to format buffer and add/delete imports.
+;; Make sure you don't have other gofmt/goimports hooks enabled.
+(defun lsp-go-install-save-hooks ()
+  (add-hook 'before-save-hook #'lsp-format-buffer t t)
+  (add-hook 'before-save-hook #'lsp-organize-imports t t))
+(add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
 
-(setenv "GOPATH" "/home/kaustubh/Workspace/GoProjects")
+;; Optional - provides fancier overlays.
+(use-package lsp-ui
+  :ensure t
+  :commands lsp-ui-mode)
 
-(setq exec-path (cons "/usr/local/go/bin" exec-path))
-(add-to-list 'exec-path "$GOPATH/bin")
+;; Company mode is a standard completion package that works well with lsp-mode.
+(use-package company
+  :ensure t
+  :config
+  ;; Optionally enable completion-as-you-type behavior.
+  (setq company-idle-delay 0)
+  (setq company-minimum-prefix-length 1))
 
-(load-file "$GOPATH/src/golang.org/x/tools/cmd/oracle/oracle.el")
+;; company-lsp integrates company mode completion with lsp-mode.
+;; completion-at-point also works out of the box but doesn't support snippets.
+(use-package company-lsp
+  :ensure t
+  :commands company-lsp)
 
-(defun my-go-mode-hook ()
-  ; Use goimports instead of go-fmt
-  (setq gofmt-command "goimports")
-  ; Call Gofmt before saving
-  (add-hook 'before-save-hook 'gofmt-before-save)
-  ; Customize compile command to run go build
-  (if (not (string-match "go" compile-command))
-      (set (make-local-variable 'compile-command)
-           "go build -v && go test -v && go vet"))
-  ; Godef jump key binding
-  (local-set-key (kbd "M-.") 'godef-jump)
-  (define-key go-mode-map (kbd "RET") 'newline-and-indent)
-  )
-
-(add-hook 'go-mode-hook 'my-go-mode-hook)
-(add-hook 'go-mode-hook #'smartparens-mode)
+;; Optional - provides snippet support.
+(use-package yasnippet
+  :ensure t
+  :commands yas-minor-mode
+  :hook (go-mode . yas-minor-mode))
 
 ;; HELM CONFIGURATION
 ;; ----------------------------------------------------------
@@ -307,12 +253,6 @@
 ;; -------------------------------------------------------------
 
 (require 'smartparens)
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
 
 ;; FULLSCREEN TOGGLE CONFIGURATION
 ;; --------------------------------------------------------------
@@ -344,10 +284,11 @@
 ;; ------------------------------------------------------------------
 
 (projectile-mode 1)
-(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 (setq projectile-completion-system 'helm)
 (helm-projectile-on)
 (setq projectile-switch-project-action 'helm-projectile)
+(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+(setq helm-ag-insert-at-point 'symbol)
 
 ;; MAGIT CONFIGURATION
 ;; -------------------------------------------------------------------
@@ -380,14 +321,48 @@
   (add-hook 'xref-backend-functions #'xref-js2-xref-backend nil t)))
 
 ;; RUST MODE CONFIGURATION
-(add-hook 'rust-mode-hook #'racer-mode)
-(add-hook 'racer-mode-hook #'eldoc-mode)
-
-(add-hook 'racer-mode-hook #'company-mode)
-
 (require 'rust-mode)
-(define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
-(setq company-tooltip-align-annotations t)
+
+(add-hook 'rust-mode-hook
+          (lambda () (setq indent-tabs-mode nil)))
+
+;; (add-hook 'rust-mode-hook #'racer-mode)
+;; (add-hook 'racer-mode-hook #'eldoc-mode)
+;; (add-hook 'racer-mode-hook #'company-mode)
+;; (define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
+;; (setq company-tooltip-align-annotations t)
+
+;; (setq rust-format-on-save t)
+(define-key rust-mode-map (kbd "C-c C-r") 'rust-run)
+(define-key rust-mode-map (kbd "C-c C-t") 'rust-test)
+(define-key rust-mode-map (kbd "C-c C-c") 'rust-compile)
+
+;; TODO: Automatically run clippy on buffer change (rust-run-clippy)
+;; (use-package dap-mode)
+;; (use-package dap-LANGUAGE) to load the dap adapter for your language
+
+;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
+;; (setq lsp-keymap-prefix "s-l")
+
+(use-package lsp-mode
+  :ensure t
+  :hook (rust-mode . lsp-deferred)
+  :commands (lsp lsp-deferred))
+
+(use-package lsp-ui
+  :ensure t
+  :commands lsp-ui-mode)
+
+(use-package helm-lsp
+  :ensure t
+  :commands helm-lsp-workspace-symbol)
+
+(use-package lsp-treemacs
+  :ensure t
+  :commands lsp-treemacs-errors-list)
+
+(setq lsp-ui-doc-enable nil)
+(setq lsp-ui-sideline-enable nil)
 
 ;; YAML MODE CONFIGURATION
 ;; -------------------------------------------------------------------
@@ -451,6 +426,8 @@
 (global-set-key (kbd "C-x j") 'json-pretty-print)
 
 ;; Dired mode customizations
+;; Older versions of emacs do not require including dired-x
+(require 'dired-x)
 (add-hook 'dired-mode-hook
 	  (lambda ()
 	    (dired-omit-mode 1)
@@ -490,9 +467,6 @@
   (setq flycheck-check-syntax-automatically '(save mode-enabled))
   (eldoc-mode +1)
   (tide-hl-identifier-mode +1)
-  ;; company is an optional dependency. You have to
-  ;; install it separately via package-install
-  ;; `M-x package-install [ret] company`
   (company-mode +1))
 
 ;; aligns annotation to the right hand side
@@ -505,5 +479,45 @@
 ;; EditorConfig Configuration
 (require 'editorconfig)
 (editorconfig-mode 1)
+
+;; Enable protobuf mode
+(protobuf-mode)
+
+;; RUBY MODE
+(add-hook 'ruby-mode-hook 'robe-mode)
+(add-hook 'ruby-mode-hook 'flycheck-mode)
+(add-hook 'ruby-mode-hook #'rubocop-mode)
+
+(eval-after-load 'company
+  '(push 'company-robe company-backends))
+
+(defun ruby-mode-reload-env()
+  (when (not (robe-running-p)) (robe-start))
+  (ruby-load-file buffer-file-name)
+)
+
+;; Reloads the current ruby process if a file is opened or changed
+;; There must be a better way to do this, investigate!
+(defun ruby-mode-custom-hooks ()
+  (add-hook 'find-file-hook 'ruby-mode-reload-env)
+  (add-hook 'after-save-hook 'ruby-mode-reload-env)
+  )
+
+(add-hook 'ruby-mode-hook #'ruby-mode-custom-hooks)
+
+;; PLANTUML MODE
+(require 'plantuml-mode)
+;; Paranoid issue, if for some reason plantuml-set-exec-mode is changed
+;; to server in a plantuml buffer, bye bye privacy!
+;; The check is (or plantuml-exec-mode plantuml-default-exec-mode)
+(setq plantuml-default-exec-mode 'executable)
+
+;; MARKDOWN MODE
+(use-package markdown-mode
+  :ensure t
+  :mode (("README\\.md\\'" . gfm-mode)
+         ("\\.md\\'" . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode))
+  :init (setq markdown-command "pandoc"))
 
 ;; init.el ends here
