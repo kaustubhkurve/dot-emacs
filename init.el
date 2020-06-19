@@ -481,7 +481,7 @@
 (editorconfig-mode 1)
 
 ;; Enable protobuf mode
-;; (protobuf-mode)
+(add-to-list 'auto-mode-alist '("\\.proto$" . protobuf-mode))
 
 ;; RUBY MODE
 (add-hook 'ruby-mode-hook 'robe-mode)
