@@ -481,7 +481,7 @@
 (editorconfig-mode 1)
 
 ;; Enable protobuf mode
-(protobuf-mode)
+;; (protobuf-mode)
 
 ;; RUBY MODE
 (add-hook 'ruby-mode-hook 'robe-mode)
