@@ -242,9 +242,6 @@
    ("C-h B" . embark-bindings))
   :init
   (setq prefix-help-command #'embark-prefix-help-command)
-  ;; (add-hook 'eldoc-documentation-functions #'embark-eldoc-first-target)
-  ;; (setq eldoc-documentation-strategy #'eldoc-documentation-compose-eagerly)
-
   :config
   (add-to-list 'display-buffer-alist
                '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
@@ -334,8 +331,7 @@
 
 (use-package yaml-mode
   :ensure t
-  :bind (:map yaml-mode-map ("\C-m" . newline-and-indent))
-  :hook (yaml-mode . ansible-doc-mode))
+  :bind (:map yaml-mode-map ("\C-m" . newline-and-indent)))
 
 
 (use-package dockerfile-mode
