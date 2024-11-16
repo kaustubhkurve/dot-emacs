@@ -36,7 +36,7 @@
   (scroll-bar-mode -1)
   (menu-bar-mode -1)
 
-  (add-to-list 'default-frame-alist '(font . "Source Code Pro Medium-11"))
+  (add-to-list 'default-frame-alist '(font . "Source Code Pro Medium-12"))
   (add-to-list 'default-frame-alist '(fullscreen . fullscreen))
   (load-theme 'modus-operandi t)
   (set-cursor-color "brown")
@@ -257,17 +257,46 @@
 
 (use-package yasnippet
   :ensure t
-  :commands yas-minor-mode
-  :hook (go-mode . yas-minor-mode))
+  :commands yas-minor-mode)
 
 
-(use-package go-mode
-  :ensure t)
+(use-package treesit-auto
+  :ensure t
+  :custom
+  (treesit-auto-install 'prompt)
+  :config
+  (setq treesit-auto-langs '(go rust))
+  (treesit-auto-add-to-auto-mode-alist 'all)
+  (global-treesit-auto-mode))
+
+
+(use-package go-ts-mode
+  :hook
+  (go-ts-mode . lsp-deferred)
+  (go-ts-mode . lsp-go-install-save-hooks)
+  (go-ts-mode . yas-minor-mode)
+  :config
+  (add-to-list 'consult-imenu-config
+	       '(go-ts-mode :toplevel "Function"
+			     :types ((?f "Function" font-lock-function-name-face)
+				     (?m "Method"    font-lock-function-name-face)
+				     (?s "Struct"  font-lock-type-face)
+				     (?t "Type"     font-lock-type-face)
+				     (?i "Interface" font-lock-type-face)
+				     (?a "Alias" font-lock-type-face))))
+  )
+
+
+(use-package lua-mode
+  :ensure t
+  :hook
+  (lua-mode . lsp-deferred))
 
 
 ;; Scala Configuration
 (use-package scala-mode
   :ensure t
+  :hook (scala-mode . lsp-deferred)
   :interpreter ("scala" . scala-mode))
 
 
@@ -319,11 +348,20 @@
 		    (add-hook 'xref-backend-functions #'xref-js2-xref-backend nil t))))
 
 
-(use-package rust-mode
-  :ensure t
+(use-package rust-ts-mode
+  :hook
+  (rust-ts-mode . lsp-deferred)
   :config
   (setq indent-tabs-mode nil)
   (setq rust-format-on-save t)
+  (add-to-list 'consult-imenu-config
+	       '(rust-ts-mode :toplevel "Fn"
+			     :types ((?f "Fn" font-lock-function-name-face)
+				     (?m "Module"    font-lock-type-face)
+				     (?s "Struct"  font-lock-type-face)
+				     (?t "Type"     font-lock-type-face)
+				     (?e "Enum" font-lock-type-face)
+				     (?i "Impl" font-lock-function-name-face))))
   :bind (("C-c C-r" . rust-run)
 	 ("C-c C-t" . rust-test)
 	 ("C-c C-c" . rust-compile)))
@@ -430,13 +468,9 @@
 
 (use-package lsp-mode
   :ensure t
-  :hook
-  (rust-mode . lsp-deferred)
-  (go-mode . lsp-deferred)
-  (go-mode . lsp-go-install-save-hooks)
-  (scala-mode . lsp-deferred)
   :commands (lsp lsp-deferred)
   :config
+  (setq lsp-enable-imenu nil)
   (setq lsp-prefer-flymake nil)
   (setq lsp-keep-workspace-alive nil)
   (setq lsp-enable-snippet nil)
