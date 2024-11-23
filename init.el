@@ -49,6 +49,7 @@
   (delete-selection-mode 1)
   (load custom-file 'noerror)
   (show-paren-mode 1)
+  (electric-pair-mode 1)
 
   ;; Highlight Comment Annotations
   (defun font-lock-comment-annotations ()
