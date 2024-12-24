@@ -256,6 +256,11 @@
   (embark-collect-mode . consult-preview-at-point-mode))
 
 
+(use-package eglot
+  :init
+  (setq eglot-ignored-server-capabilities '(:inlayHintProvider :hoverProvider)))
+
+
 (use-package yasnippet
   :ensure t
   :commands yas-minor-mode)
@@ -266,15 +271,14 @@
   :custom
   (treesit-auto-install 'prompt)
   :config
-  (setq treesit-auto-langs '(go rust))
+  (setq treesit-auto-langs '(go rust gomod))
   (treesit-auto-add-to-auto-mode-alist 'all)
   (global-treesit-auto-mode))
 
 
 (use-package go-ts-mode
   :hook
-  (go-ts-mode . lsp-deferred)
-  (go-ts-mode . lsp-go-install-save-hooks)
+  (go-ts-mode . eglot-ensure)
   (go-ts-mode . yas-minor-mode)
   :config
   (add-to-list 'consult-imenu-config
@@ -284,6 +288,9 @@
 				     (?s "Struct"  font-lock-type-face)
 				     (?t "Type"     font-lock-type-face)
 				     (?i "Interface" font-lock-type-face)
+				     (?c "Constant" font-lock-constant-face)
+				     (?v "Variable" font-lock-variable-name-face)
+				     (?d "Field" font-lock-type-face)
 				     (?a "Alias" font-lock-type-face))))
   )
 
