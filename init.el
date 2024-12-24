@@ -258,7 +258,9 @@
 
 (use-package eglot
   :init
-  (setq eglot-ignored-server-capabilities '(:inlayHintProvider :hoverProvider)))
+  (setq eglot-ignored-server-capabilities '(:inlayHintProvider :hoverProvider))
+  :config
+  (add-hook 'before-save-hook #'eglot-format-buffer))
 
 
 (use-package yasnippet
