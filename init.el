@@ -36,9 +36,9 @@
   (scroll-bar-mode -1)
   (menu-bar-mode -1)
 
-  (add-to-list 'default-frame-alist '(font . "Source Code Pro Medium-12"))
+  (add-to-list 'default-frame-alist '(font . "Source Code Pro Medium-11"))
   (add-to-list 'default-frame-alist '(fullscreen . fullscreen))
-  (load-theme 'modus-operandi t)
+  (load-theme 'wombat t)
   (set-cursor-color "brown")
 
   (setq inhibit-startup-message t)
@@ -457,7 +457,9 @@
 
 
 (use-package terraform-mode
-  :ensure t)
+  :ensure t
+  :custom
+  (setq terraform-format-on-save t))
 
 (use-package rubocop
   :ensure t)
