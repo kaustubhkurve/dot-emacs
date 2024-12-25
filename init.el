@@ -74,7 +74,9 @@
 	      ))
   :custom
   (enable-recursive-minibuffers t)
-  (read-extended-command-predicate #'command-completion-default-include-p))
+  (read-extended-command-predicate #'command-completion-default-include-p)
+  (completion-cycle-threshold 3)
+  (tab-always-indent 'complete))
 
 
 ;;; Packages
@@ -85,26 +87,10 @@
 	  (exec-path-from-shell-initialize)))
 
 
-(use-package company
-  :ensure t
-  :config
-  (global-company-mode)
-  (push 'company-robe company-backends)
-  (setq company-idle-delay 0.2)
-  (setq company-minimum-prefix-length 1)
-  (setq company-tooltip-align-annotations t))
-
-
 (use-package flycheck
   :ensure t
   :config
   (global-flycheck-mode))
-
-
-(use-package company-jedi
-  :ensure t
-  :config
-  (add-to-list 'company-backends 'company-jedi))
 
 
 (use-package vertico
@@ -248,6 +234,13 @@
   :ensure t
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
+
+
+(use-package corfu
+  :custom
+  (corfu-cycle t)
+  :init
+  (global-corfu-mode))
 
 
 (use-package eglot
