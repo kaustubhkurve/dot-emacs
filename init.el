@@ -258,7 +258,7 @@
 
 (use-package eglot
   :init
-  (setq eglot-ignored-server-capabilities '(:inlayHintProvider :hoverProvider))
+  (setq eglot-ignored-server-capabilities '(:inlayHintProvider :hoverProvider :documentSymbolProvider))
   :config
   (add-hook 'before-save-hook #'eglot-format-buffer))
 
@@ -297,16 +297,42 @@
   )
 
 
+(use-package rust-ts-mode
+  :hook
+  (rust-ts-mode . eglot-ensure)
+  :config
+  (setq indent-tabs-mode nil)
+  (setq rust-format-on-save t)
+  (add-to-list 'consult-imenu-config
+	       '(rust-ts-mode :toplevel "Fn"
+			     :types ((?f "Fn" font-lock-function-name-face)
+				     (?M "Module"    font-lock-type-face)
+				     (?m "Method"    font-lock-function-name-face)
+				     (?s "Struct"  font-lock-type-face)
+				     (?t "Type"     font-lock-type-face)
+				     (?e "Enum" font-lock-type-face)
+				     (?d "Field" font-lock-type-face)
+				     (?E "EnumMember" font-lock-type-face)
+				     (?i "Impl" font-lock-function-name-face))))
+  :bind (("C-c C-r" . rust-run)
+	 ("C-c C-t" . rust-test)
+	 ("C-c C-c" . rust-compile)))
+
+
 (use-package lua-mode
   :ensure t
   :hook
-  (lua-mode . lsp-deferred))
+  (lua-mode . eglot-ensure))
+
+
+(use-package java-mode
+  :hook (java-mode . eglot-ensure))
 
 
 ;; Scala Configuration
 (use-package scala-mode
   :ensure t
-  :hook (scala-mode . lsp-deferred)
+  :hook (scala-mode . eglot-ensure)
   :interpreter ("scala" . scala-mode))
 
 
@@ -356,25 +382,6 @@
   (js2-mode . js2-imenu-extras-mode)
   ('js2-mode-hook (lambda ()
 		    (add-hook 'xref-backend-functions #'xref-js2-xref-backend nil t))))
-
-
-(use-package rust-ts-mode
-  :hook
-  (rust-ts-mode . lsp-deferred)
-  :config
-  (setq indent-tabs-mode nil)
-  (setq rust-format-on-save t)
-  (add-to-list 'consult-imenu-config
-	       '(rust-ts-mode :toplevel "Fn"
-			     :types ((?f "Fn" font-lock-function-name-face)
-				     (?m "Module"    font-lock-type-face)
-				     (?s "Struct"  font-lock-type-face)
-				     (?t "Type"     font-lock-type-face)
-				     (?e "Enum" font-lock-type-face)
-				     (?i "Impl" font-lock-function-name-face))))
-  :bind (("C-c C-r" . rust-run)
-	 ("C-c C-t" . rust-test)
-	 ("C-c C-c" . rust-compile)))
 
 
 (use-package yaml-mode
@@ -472,29 +479,6 @@
 
 (use-package rubocop
   :ensure t)
-
-
-(defun lsp-go-install-save-hooks ()
-  (add-hook 'before-save-hook #'lsp-format-buffer t t)
-  (add-hook 'before-save-hook #'lsp-organize-imports t t))
-
-(use-package lsp-mode
-  :ensure t
-  :commands (lsp lsp-deferred)
-  :config
-  (setq lsp-enable-imenu nil)
-  (setq lsp-prefer-flymake nil)
-  (setq lsp-keep-workspace-alive nil)
-  (setq lsp-enable-snippet nil)
-  (setq lsp-headerline-breadcrumb-enable nil))
-
-
-(use-package lsp-metals
-  :ensure t)
-
-(use-package lsp-java
-  :ensure t
-  :hook (java-mode . lsp-deferred))
 
 
 ;;; init.el ends here
