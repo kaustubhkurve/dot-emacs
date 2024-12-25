@@ -107,12 +107,6 @@
   (add-to-list 'company-backends 'company-jedi))
 
 
-(use-package elpy
-  :ensure t
-  :init
-  (elpy-enable))
-
-
 (use-package vertico
   :ensure t
   :custom
@@ -273,9 +267,14 @@
   :custom
   (treesit-auto-install 'prompt)
   :config
-  (setq treesit-auto-langs '(go rust gomod))
+  (setq treesit-auto-langs '(go rust gomod python))
   (treesit-auto-add-to-auto-mode-alist 'all)
   (global-treesit-auto-mode))
+
+
+(use-package python-mode
+  :hook
+  (python-ts-mode . eglot-ensure))
 
 
 (use-package go-ts-mode
