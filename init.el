@@ -75,7 +75,6 @@
   :custom
   (enable-recursive-minibuffers t)
   (read-extended-command-predicate #'command-completion-default-include-p)
-  (completion-cycle-threshold 3)
   (tab-always-indent 'complete))
 
 
@@ -299,12 +298,19 @@
   )
 
 
+(use-package flycheck-rust
+  :ensure t)
+
 (use-package rust-ts-mode
   :hook
   (rust-ts-mode . eglot-ensure)
+  (flycheck-mode . flycheck-rust-setup)
   :config
   (setq indent-tabs-mode nil)
   (setq rust-format-on-save t)
+  (add-to-list 'eglot-server-programs
+               '((rust-ts-mode rust-mode) .
+		 ("rust-analyzer" :initializationOptions (:check (:command "clippy")))))
   (add-to-list 'consult-imenu-config
 	       '(rust-ts-mode :toplevel "Fn"
 			     :types ((?f "Fn" font-lock-function-name-face)
