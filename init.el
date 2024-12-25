@@ -237,10 +237,20 @@
 
 
 (use-package corfu
+  :ensure t
   :custom
   (corfu-cycle t)
   :init
   (global-corfu-mode))
+
+
+(use-package cape
+  :ensure t
+  :bind ("C-c p" . cape-prefix-map)
+  :init
+  (add-hook 'completion-at-point-functions #'cape-dabbrev)
+  (add-hook 'completion-at-point-functions #'cape-file)
+)
 
 
 (use-package eglot
