@@ -38,7 +38,7 @@
 
   (add-to-list 'default-frame-alist '(font . "Source Code Pro Medium-11"))
   (add-to-list 'default-frame-alist '(fullscreen . fullscreen))
-  (load-theme 'wombat t)
+  (load-theme 'tsdh-light t)
   (set-cursor-color "brown")
 
   (setq inhibit-startup-message t)
