@@ -482,7 +482,7 @@
 
 (use-package terraform-mode
   :ensure t
-  :custom
+  :config
   (setq terraform-format-on-save t))
 
 (use-package rubocop
